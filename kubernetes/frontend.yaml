@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: asia.gcr.io/rin/nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      - name: elixir
+        image: asia.gcr.io/rin/elixir
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4000
+        volumeMounts:
+        - mountPath: "/var/www"
+          name: data
+      volumes:
+      - name: data
+        hostPath:
+          path: /Users/y_arita/Workspaces/ws/rin/elixir/src 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: web
+---
+kind: Service
+metadata:
+  name: database
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 26257
+    protocol: TCP
+    targetPort: 26257
+  selector:
+    app: database
