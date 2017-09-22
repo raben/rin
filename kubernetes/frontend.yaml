@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -23,6 +23,11 @@ spec:
         volumeMounts:
         - mountPath: "/var/www"
           name: data
+        env:
+        - name: GOOGLE_CLIENT_ID
+          value: "**********"
+        - name: GOOGLE_CLIENT_SECRET
+          value: "**********"
       volumes:
       - name: data
         hostPath:
@@ -40,15 +45,3 @@ spec:
     targetPort: 80
   selector:
     app: web
----
-kind: Service
-metadata:
-  name: database
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 26257
-    protocol: TCP
-    targetPort: 26257
-  selector:
-    app: database

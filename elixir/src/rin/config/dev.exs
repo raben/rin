@@ -54,6 +54,6 @@ config :rin, Rin.Repo,
   username: "postgres",
   password: "postgres",
   database: "rin_dev",
-  hostname: "database",
-  port: 26257,
-  pool_size: 10
+  hostname: "cockroachdb-public",
+  pool_size: 10,
+  port: "26257"

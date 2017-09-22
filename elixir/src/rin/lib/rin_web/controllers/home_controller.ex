@@ -1,4 +1,4 @@
-defmodule RinWeb.PageController do
+defmodule RinWeb.HomeController do
   use RinWeb, :controller
 
   def index(conn, _params) do

@@ -17,6 +17,6 @@ RUN mix local.hex --force \
 	&& mix deps.get \
 	&& mix ecto.create
 
-#CMD tail -f /dev/null
+CMD tail -f /dev/null
 
-ENTRYPOINT mix phx.server
+#ENTRYPOINT mix phx.server

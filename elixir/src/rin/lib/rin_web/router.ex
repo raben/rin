@@ -16,11 +16,13 @@ defmodule RinWeb.Router do
   scope "/", RinWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", HomeController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", RinWeb do
-  #   pipe_through :api
-  # end
+  scope "/auth", RinWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
 end
